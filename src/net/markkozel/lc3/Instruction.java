@@ -1,37 +1,48 @@
 package net.markkozel.lc3;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Instruction {
 
-	private String[] OpCodes = {"ADD", "AND", "BR", "JMP", "JSR", "JSRR", "LD", "LDI", "LDR", "LEA", "NOT", "RET", "RTI", "ST", "STI", "STR","TRAP"};
-	private String[] PseudoOps = {".ORIG", ".FILL", ".BLKW", ".STRINGZ", "END"};
+	private final String[] OpCodeOperate = {"ADD", "AND", "NOT"};
+	private List<String> OpCodeOperateList = Arrays.asList(OpCodeOperate);
+	
+	private final String[] OpCodeData = {"LD", "LDI", "LDR", "LEA", "RTI", "ST", "STI", "STR"};
+	private List<String> OpCodeDataList = Arrays.asList(OpCodeData);
+	
+	private final String[] OpCodeControl = {"BR", "JMP", "JSR", "JSRR", "TRAP"};
+	private List<String> OpCodeControlList = Arrays.asList(OpCodeControl);
+	
+	protected final String[] PseudoOps = { ".ORIG", ".FILL", ".BLKW", ".STRINGZ", ".END" };
+	protected List<String> PseudoOpsList = Arrays.asList(PseudoOps);
+	
+	enum Instruction_Type 
+	{ 
+	    PSEUDOOP, COMMENT, OPERATE, DATAMOVEMENT, CONTROL; 
+	} 
 	
 	private String label;
 	private String opCode;
 	private String operands;
 	private String comments;
 	private String pseudo;
+	private String address;
 	
-	private String line;
-	private String[] tokens;
+	private Instruction_Type type;
 	
-	private String delimit = "[ ]+";
+	protected String line;
+	protected String[] tokens;
+	
+	protected String delimit = "[ ]+";
 	
 	public Instruction(String line) {
 		this.line = line;
-		tokens = line.split(delimit);
+//		tokens = line.split(delimit);
 		
-		for(int i = 0; i < tokens.length; i++){
-			if(tokens[i].startsWith(".")){
-				this.pseudo = tokens[i];
-			}
-		}
-		
-		this.label = getLabel();
 	}
 	
-	private String getLabel(){
-		String result = "";
-		
-		return result;
+	private void setType(Instruction_Type type){
+		this.type= type;
 	}
 }
