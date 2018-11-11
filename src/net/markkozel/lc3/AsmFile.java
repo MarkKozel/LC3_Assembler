@@ -39,7 +39,7 @@ public class AsmFile extends LC3_FileTypeParent implements LC3_FileTypeTemplate 
 			br = new BufferedReader(fr);
 
 			while ((currentLine = br.readLine()) != null) {
-				System.out.println(currentLine);
+//				System.out.println(currentLine);
 				asmCode.add(currentLine);
 			}
 		} catch (IOException e) {
