@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class ParseSourceCode {
 
 	private final static String[] OpCodeOperate = { "ADD", "AND", "NOT" };
@@ -29,6 +30,13 @@ public class ParseSourceCode {
 		ArrayList<Instruction> instructions = new ArrayList<Instruction>();
 
 		for (String line : sourceList) {
+			
+			StringBuilder sb = new StringBuilder(line);
+			while (sb.lastIndexOf("\t") == sb.length()) {
+			    sb.delete(sb.length() - 1, sb.length());
+			}
+			
+			line = sb.toString();
 			line.trim();
 
 			if (line.startsWith(";")) {

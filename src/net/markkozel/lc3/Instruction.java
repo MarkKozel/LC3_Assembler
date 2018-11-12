@@ -36,6 +36,9 @@ public class Instruction {
 	
 	protected String delimit = "[ ]+";
 	
+	protected boolean isGood = false;
+	protected String errorMsg;
+	
 	public Instruction(String line) {
 		this.line = line;
 //		tokens = line.split(delimit);

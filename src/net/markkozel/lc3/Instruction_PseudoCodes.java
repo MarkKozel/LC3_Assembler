@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Instruction_PseudoCodes extends Instruction {
 
+	private String label;
 	private String code;
 	private String value;
 
@@ -15,24 +16,50 @@ public class Instruction_PseudoCodes extends Instruction {
 		this.tokens = this.line.split(this.delimit);
 
 		for (int i = 0; i < tokens.length; i++) {
-			if(tokens[i].toUpperCase() == ".ORIG") {
-				this.code = ".ORIG";
-				this.value = tokens[i+1];
+			// .ORIG || .BLKW || .FILL
+			if ((tokens[i].toUpperCase() == ".ORIG") || (tokens[i].toUpperCase() == ".BLKW")
+					|| (tokens[i].toUpperCase() == ".FILL")) {
+				if (tokens[i + 1] != null) {
+					this.code = tokens[i].toUpperCase();
+					this.value = tokens[i + 1];
+					this.isGood = true;
+					break;
+				} else {
+					this.isGood = false;
+					this.errorMsg = tokens[i].toUpperCase() + " requires additional parameter";
+				}
+
+			} else {
+				// .END
+				if (tokens[i].toUpperCase() == ".END") {
+					this.code = tokens[i].toUpperCase();
+					this.value = "";
+					this.isGood = true;
+					break;
+				} else {
+					
+					// .STRINGZ
+					if (tokens[i].toUpperCase() == ".STRINGZ") {
+						this.code = tokens[i].toUpperCase();
+						this.value = tokens[i];
+						this.isGood = true;
+						break;
+					} else {
+						
+						// Label
+						if (this.label == null) {
+							this.label = tokens[i];
+						} else {
+							this.isGood = false;
+							this.errorMsg = tokens[i].toUpperCase() + " label cannot be parsed";
+						}
+					}
+				}
+
 			}
-			
-			if(tokens[i].toUpperCase() == ".END") {
-				this.code = ".END";
-			}
-//			if (PseudoOpsList.contains(tokens[i])) {
-//				this.pseudo = tokens[i];
-//				if (this.pseudo == ".ORIG") {
-//					this.address = tokens[i + 1];
-//					i++;
-//				}
-//			}
+
 		}
 	}
-
 
 	public String toString() {
 		String result = this.line;
