@@ -1,8 +1,15 @@
+import java.util.ArrayList;
+
 import net.markkozel.lc3.AsmFile;
+import net.markkozel.lc3.Instruction;
+import net.markkozel.lc3.ParseSourceCode;
 
 public class Assembler {
 	String asmFileName;
+	ArrayList<String> asmCode = new ArrayList<String>();
+	ArrayList<Instruction> asmInstructions = new ArrayList<Instruction>();
 	AsmFile asmFile = new AsmFile();
+	ParseSourceCode parseSource = new ParseSourceCode();
 
 	public static void main(String[] args) {
 		if(args.length < 1){
@@ -20,7 +27,12 @@ public class Assembler {
 	
 	public void loadAsmFile() {
 		System.out.println("Assembling" + asmFileName);
-		asmFile.readAsmFile(asmFileName);
+		asmCode = asmFile.readAsmFile(asmFileName);
+		asmInstructions = parseSource.parse(asmCode);
+		
+		for(Instruction line : asmInstructions){
+			System.out.println(line.toString());
+		}
 	}
 
 }

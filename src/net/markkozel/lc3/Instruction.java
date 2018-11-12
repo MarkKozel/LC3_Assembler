@@ -5,17 +5,17 @@ import java.util.List;
 
 public class Instruction {
 
-	private final String[] OpCodeOperate = {"ADD", "AND", "NOT"};
-	private List<String> OpCodeOperateList = Arrays.asList(OpCodeOperate);
-	
-	private final String[] OpCodeData = {"LD", "LDI", "LDR", "LEA", "RTI", "ST", "STI", "STR"};
-	private List<String> OpCodeDataList = Arrays.asList(OpCodeData);
-	
-	private final String[] OpCodeControl = {"BR", "JMP", "JSR", "JSRR", "TRAP"};
-	private List<String> OpCodeControlList = Arrays.asList(OpCodeControl);
-	
-	protected final String[] PseudoOps = { ".ORIG", ".FILL", ".BLKW", ".STRINGZ", ".END" };
-	protected List<String> PseudoOpsList = Arrays.asList(PseudoOps);
+//	private final static String[] OpCodeOperate = {"ADD", "AND", "NOT"};
+//	static List<String> OpCodeOperateList = Arrays.asList(OpCodeOperate);
+//	
+//	private final String[] OpCodeData = {"LD", "LDI", "LDR", "LEA", "RTI", "ST", "STI", "STR"};
+//	private List<String> OpCodeDataList = Arrays.asList(OpCodeData);
+//	
+//	private final String[] OpCodeControl = {"BR", "JMP", "JSR", "JSRR", "TRAP"};
+//	private List<String> OpCodeControlList = Arrays.asList(OpCodeControl);
+//	
+//	protected final String[] PseudoOps = { ".ORIG", ".FILL", ".BLKW", ".STRINGZ", ".END" };
+//	protected List<String> PseudoOpsList = Arrays.asList(PseudoOps);
 	
 	enum Instruction_Type 
 	{ 
@@ -42,7 +42,11 @@ public class Instruction {
 		
 	}
 	
-	private void setType(Instruction_Type type){
+	protected void setType(Instruction_Type type){
 		this.type= type;
+	}
+	
+	public Instruction_Type getType(){
+		return this.type;
 	}
 }

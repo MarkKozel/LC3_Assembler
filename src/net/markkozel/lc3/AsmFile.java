@@ -17,20 +17,18 @@ public class AsmFile extends LC3_FileTypeParent implements LC3_FileTypeTemplate 
 
 	@Override
 	public void writeFile() {
-		// TODO Auto-generated method stub
-
 		super.writeFile();
 	}
-	
-	
+
 	/**
 	 * 
-	 * @param fileName path and name of source (asm) file
+	 * @param fileName
+	 *            path and name of source (asm) file
 	 */
-	public void readAsmFile(String fileName) {
+	public ArrayList<String> readAsmFile(String fileName) {
 		AsmFileName = fileName;
 		String currentLine;
-		
+
 		BufferedReader br = null;
 		FileReader fr = null;
 
@@ -39,7 +37,6 @@ public class AsmFile extends LC3_FileTypeParent implements LC3_FileTypeTemplate 
 			br = new BufferedReader(fr);
 
 			while ((currentLine = br.readLine()) != null) {
-//				System.out.println(currentLine);
 				asmCode.add(currentLine);
 			}
 		} catch (IOException e) {
@@ -57,5 +54,6 @@ public class AsmFile extends LC3_FileTypeParent implements LC3_FileTypeTemplate 
 				ex.printStackTrace();
 			}
 		}
+		return asmCode;
 	}
 }
