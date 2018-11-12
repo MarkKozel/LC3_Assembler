@@ -36,8 +36,8 @@ public class Instruction {
 	
 	protected String delimit = "[ ]+";
 	
-	protected boolean isGood = false;
-	protected String errorMsg;
+	protected boolean isGood = true;
+	protected String errorMsg = "";
 	
 	public Instruction(String line) {
 		this.line = line;
