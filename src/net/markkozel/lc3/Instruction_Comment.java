@@ -1,11 +1,11 @@
 package net.markkozel.lc3;
 
-import java.util.Arrays;
-import java.util.List;
+//import java.util.Arrays;
+//import java.util.List;
 
 public class Instruction_Comment extends Instruction {
 
-	private String comment;
+	protected String comment;
 
 	public Instruction_Comment(String line) {
 		super(line);

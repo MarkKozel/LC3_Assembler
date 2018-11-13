@@ -1,21 +1,19 @@
 package net.markkozel.lc3;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.StringTokenizer;
 
-import net.markkozel.lc3.Instruction.Instruction_Type;
+//import net.markkozel.lc3.Instruction.Instruction_Type;
 
 public class Instruction_Operate extends Instruction {
 
 	Shared shared = Shared.getInstance();
 
-	private String label;
-	private String code;
+//	protected String label;
+//	protected String code;
 	private String destReg;
 	private String srcReg1;
 	private String srcReg2;
-	private String value;
+//	protected String value;
 	private boolean immediate = false; //Mode for AND and ADD
 
 	public Instruction_Operate(String line) {
@@ -34,13 +32,13 @@ public class Instruction_Operate extends Instruction {
 			String currentOriginal = tokens.nextToken(); // Preserves case
 			String current = currentOriginal.toUpperCase(); // Uppercase for comparison
 
-			if (shared.OpCodeOperateList.contains(current) && (this.code == null)) { // Op
-				this.code = current;
-				if (this.code.equals("NOT")) {
+			if (shared.OpCodeOperateList.contains(current) && (this.getCode() == null)) { // Op
+				this.setCode(current);
+				if (this.getCode().equals("NOT")) {
 					this.immediate = false;
 				}
 			} else {
-				if (this.code != null) {
+				if (this.getCode() != null) {
 					if (current.startsWith("R")) { //Register
 						if (destReg == null) {
 							destReg = current;
@@ -50,12 +48,13 @@ public class Instruction_Operate extends Instruction {
 							} else {
 								if (srcReg2 == null) {
 									srcReg2 = current;
+									this.immediate = false;
 								}
 							}
 						}
 					} else { //Not Register. IMM5 or Label
 						if (current.startsWith("#") || current.startsWith("X")) {
-							this.value = currentOriginal;
+							this.setValue(currentOriginal);
 							this.immediate = true;
 						} else { // Must be label
 							this.isGood = false;
@@ -63,8 +62,8 @@ public class Instruction_Operate extends Instruction {
 						} //else label
 					} //else "R"
 				} else { // Must be label
-					if (this.label == null) {
-						this.label = current;
+					if (this.getLabel() == null) {
+						this.setLabel(current);
 					} else {// error
 						this.isGood = false;
 						this.errorMsg = current + " cannot be parsed";
@@ -76,16 +75,28 @@ public class Instruction_Operate extends Instruction {
 
 	}//method
 
+//	public String getCode() {
+//		return this.code;
+//	}
+//	
+//	public String getValue() {
+//		return this.value;
+//	}
+//	
+//	public String getLabel() {
+//		return this.label;
+//	}
+	
 	public String toString() {
 		String result = this.line;
 
-		if (this.code != null) {
+		if (this.getCode() != null) {
 			//			result = "Operate-> " + this.label + " code: " + this.code + " destR: " + this.destReg + " srcR1: "
 			//					+ this.srcReg1 + " srcR2: " + this.srcReg2 + " value: " + this.value + "IMM?: " + this.immediate;
 
-			String isLabel = this.label != null ? (this.label +" ") : "";
-			String isDest2 = (this.srcReg2 != null) ? this.srcReg2 : (this.value + " IMM5");
-			result = "Operate-> " + isLabel + this.code + " " + this.destReg + " " + this.srcReg1 + " " + isDest2;
+			String isLabel = this.getLabel() != null ? (this.getLabel() +" ") : "";
+			String isDest2 = (this.srcReg2 != null) ? this.srcReg2 : (this.getValue() + " IMM5");
+			result = "Operate-> " +Integer.toHexString(this.getAddress())+" "+ isLabel + this.getCode() + " " + this.destReg + " " + this.srcReg1 + " " + isDest2;
 			;
 		}
 

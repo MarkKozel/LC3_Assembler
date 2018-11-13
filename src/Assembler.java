@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import net.markkozel.lc3.AsmFile;
 import net.markkozel.lc3.Instruction;
 import net.markkozel.lc3.ParseSourceCode;
+import net.markkozel.lc3.SymbolTable;
 
 public class Assembler {
 	String asmFileName;
@@ -10,6 +11,7 @@ public class Assembler {
 	ArrayList<Instruction> asmInstructions = new ArrayList<Instruction>();
 	AsmFile asmFile = new AsmFile();
 	ParseSourceCode parseSource = new ParseSourceCode();
+	SymbolTable symbolTable = new SymbolTable();
 
 	public static void main(String[] args) {
 		if(args.length < 1){
@@ -26,13 +28,15 @@ public class Assembler {
 	}
 	
 	public void loadAsmFile() {
-		System.out.println("Assembling" + asmFileName);
+		System.out.println("Assembling " + asmFileName);
 		asmCode = asmFile.readAsmFile(asmFileName);
-		asmInstructions = parseSource.parse(asmCode);
+		asmInstructions = parseSource.parse(asmCode); //Parse each line
 		
-		for(Instruction line : asmInstructions){
-			System.out.println(line.toString());
-		}
+		symbolTable.buildSymbolTable(asmInstructions);
+		
+//		for(Instruction line : asmInstructions){
+//			System.out.println(line.toString());
+//		}
 	}
 
 }

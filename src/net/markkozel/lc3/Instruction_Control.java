@@ -1,12 +1,13 @@
 package net.markkozel.lc3;
 
-import java.util.Arrays;
-import java.util.List;
+//import java.util.Arrays;
+//import java.util.List;
 
 public class Instruction_Control extends Instruction {
 
-	private String code;
-	private String value;
+//	protected String label;
+//	protected String code;
+//	protected String value;
 
 	public Instruction_Control(String line) {
 		super(line);

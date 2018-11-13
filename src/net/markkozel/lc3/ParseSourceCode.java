@@ -1,23 +1,11 @@
 package net.markkozel.lc3;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+//import java.util.Arrays;
+//import java.util.List;
 
 
 public class ParseSourceCode {
-
-//	private final static String[] OpCodeOperate = { "ADD", "AND", "NOT" };
-//	private final List<String> OpCodeOperateList = Arrays.asList(OpCodeOperate);
-//
-//	private final String[] OpCodeData = { "LD", "LDI", "LDR", "LEA", "RTI", "ST", "STI", "STR" };
-//	private final List<String> OpCodeDataList = Arrays.asList(OpCodeData);
-//
-//	private final String[] OpCodeControl = { "BR", "JMP", "JSR", "JSRR", "TRAP" };
-//	private final List<String> OpCodeControlList = Arrays.asList(OpCodeControl);
-//
-//	protected final String[] PseudoOps = { ".ORIG", ".FILL", ".BLKW", ".STRINGZ", ".END" };
-//	private final List<String> PseudoOpsList = Arrays.asList(PseudoOps);
 	
 	Shared shared = Shared.getInstance();
 

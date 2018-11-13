@@ -1,12 +1,13 @@
 package net.markkozel.lc3;
 
-import java.util.Arrays;
-import java.util.List;
+//import java.util.Arrays;
+//import java.util.List;
 
 public class Instruction_DataMovement extends Instruction {
 
-	private String code;
-	private String value;
+//	protected String label;
+//	protected String code;
+//	protected String value;
 
 	public Instruction_DataMovement(String line) {
 		super(line);
@@ -26,6 +27,18 @@ public class Instruction_DataMovement extends Instruction {
 		// }
 	}
 
+	public String getCode() {
+		return this.code;
+	}
+	
+	public String getValue() {
+		return this.value;
+	}
+	
+	public String getLabel() {
+		return this.label;
+	}
+	
 	public String toString() {
 		String result = this.line;
 

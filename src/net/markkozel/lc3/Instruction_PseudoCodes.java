@@ -1,16 +1,14 @@
 package net.markkozel.lc3;
 
-//import java.util.Arrays;
-//import java.util.List;
 import java.util.StringTokenizer;
 
 public class Instruction_PseudoCodes extends Instruction {
 
 	Shared shared = Shared.getInstance();
 
-	private String label;
-	private String code;
-	private String value = "";
+//	protected String label;
+//	protected String code;
+//	protected String value = "";
 
 	public Instruction_PseudoCodes(String line) {
 		super(line);
@@ -28,20 +26,20 @@ public class Instruction_PseudoCodes extends Instruction {
 			String currentOriginal = tokens.nextToken(); // Preserves case
 			String current = currentOriginal.toUpperCase(); // Uppercase for comparison
 
-			if (shared.PseudoOpsList.contains(current) && (this.code == null)) { // Op
-				this.code = current;
+			if (shared.PseudoOpsList.contains(current) && (this.getCode() == null)) { // Op
+				this.setCode(current);
 			} else {
-				if (this.code != null) { // Address or Size after op
+				if (this.getCode() != null) { // Address or Size after op
 
 					// Build STRINGZ string by iterating to the end
-					if (this.code.equalsIgnoreCase(".STRINGZ")) {
-						this.value = this.value + currentOriginal + " ";
+					if (this.getCode().equalsIgnoreCase(".STRINGZ")) {
+						this.setValue(this.getValue() + currentOriginal + " ");
 					} else {
-						this.value = currentOriginal;
+						this.setValue(currentOriginal);
 					}
 				} else { // Must be label
-					if (this.label == null) {
-						this.label = current;
+					if (this.getLabel() == null) {
+						this.setLabel(current);
 					} else {// error
 						this.isGood = false;
 						this.errorMsg = current + " cannot be parsed";
@@ -50,18 +48,30 @@ public class Instruction_PseudoCodes extends Instruction {
 			}
 		} //While
 			//Clean up value
-		if (this.value != null) { // Clean up extra spaces on STRINGZ
-			this.value = this.value.replace("\"", ""); //Remove leading and trailing quotes
-			this.value.trim();
+		if (this.getValue() != null) { // Clean up extra spaces on STRINGZ
+			this.setValue(this.getValue().replace("\"", "")); //Remove leading and trailing quotes
+			this.setValue(this.getValue().trim());
 		}
 	} //method
 
+//	public String getCode() {
+//		return this.code;
+//	}
+//	
+//	public String getValue() {
+//		return this.value;
+//	}
+//	
+//	public String getLabel() {
+//		return this.label;
+//	}
+	
 	public String toString() {
 		String result = this.line;
 
 		if (this.code != null) {
-			String isLabel = this.label != null ? (this.label +" ") : "";
-			result = "Pseudo->  " + isLabel + " " + this.code + " " + this.value;
+			String isLabel = this.getLabel() != null ? (this.getLabel() +" ") : "";
+			result = "Pseudo->  " +Integer.toHexString(this.getAddress())+" "+ isLabel + " " + this.getCode() + " " + this.getValue();
 		}
 
 		return result;
