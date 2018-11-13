@@ -4,24 +4,23 @@ package net.markkozel.lc3;
 //import java.util.List;
 
 public class Instruction {
-	
-	enum Instruction_Type 
-	{ 
-	    PSEUDOOP, COMMENT, OPERATE, DATAMOVEMENT, CONTROL; 
-	} 
-	
-//	private String label;
-//	private String opCode;
-//	private String operands;
-//	private String comments;
-//	private String pseudo;
+
+	enum Instruction_Type {
+		PSEUDOOP, COMMENT, OPERATE, DATAMOVEMENT, CONTROL;
+	}
+
+	// private String label;
+	// private String opCode;
+	// private String operands;
+	// private String comments;
+	// private String pseudo;
 	protected String label;
 	protected String code;
 	protected String value;
-	private int address; //updated by Symbol Table as it is updated
-	
+	private int address; // updated by Symbol Table as it is updated
+
 	public String getLabel() {
-		return label;
+		return this.label;
 	}
 
 	public void setLabel(String label) {
@@ -29,7 +28,7 @@ public class Instruction {
 	}
 
 	public String getCode() {
-		return code;
+		return this.code;
 	}
 
 	public void setCode(String code) {
@@ -37,7 +36,11 @@ public class Instruction {
 	}
 
 	public String getValue() {
-		return value;
+		if (this.value == null) {
+			return "";
+		} else {
+			return this.value;
+		}
 	}
 
 	public void setValue(String value) {
@@ -53,46 +56,45 @@ public class Instruction {
 	}
 
 	private Instruction_Type type;
-	
+
 	protected String line;
 	protected String[] tokens;
-	
+
 	protected String delimit = "[ ]+";
-	
+
 	protected boolean isGood = true;
 	protected String errorMsg = "";
-	
+
 	public Instruction(String line) {
 		this.line = line;
-		
+
 	}
-	
-	protected void setType(Instruction_Type type){
-		this.type= type;
+
+	protected void setType(Instruction_Type type) {
+		this.type = type;
 	}
-	
-	public Instruction_Type getType(){
+
+	public Instruction_Type getType() {
 		return this.type;
 	}
 
-	
-//	public void setAdress(int address){
-//		this.address = address;
-//	}
-//	
-//	protected int getAddress(){
-//		return address;
-//	}
-//
-//	public String getCode() {
-//		return this.code;
-//	}
-//	
-//	public String getValue() {
-//		return this.value;
-//	}
-//	
-//	public String getLabel() {
-//		return this.label;
-//	}
+	// public void setAdress(int address){
+	// this.address = address;
+	// }
+	//
+	// protected int getAddress(){
+	// return address;
+	// }
+	//
+	// public String getCode() {
+	// return this.code;
+	// }
+	//
+	// public String getValue() {
+	// return this.value;
+	// }
+	//
+	// public String getLabel() {
+	// return this.label;
+	// }
 }

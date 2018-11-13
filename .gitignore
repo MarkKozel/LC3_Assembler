@@ -1,2 +1,7 @@
 *.class
 .metadata
+*.bin
+*.hex
+*.lst
+*.obj
+*.sym

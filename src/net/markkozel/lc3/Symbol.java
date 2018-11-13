@@ -10,6 +10,8 @@ public class Symbol {
 	private String name;
 	private int	address;
 	
+	Shared shared = Shared.getInstance();
+	
 	public Symbol(String name, int address) {
 		this.name = name;
 		this.address = address;
@@ -22,6 +24,9 @@ public class Symbol {
 //	}
 	
 	public String toString() {
-		return this.name +" "+ Integer.toHexString(address);
+		String space = " ";
+		int indent = 2;
+		String padding1 = shared.repeat(" ", (22 - this.name.length() + 2));
+		return this.name + padding1 + Integer.toHexString(address);
 	}
 }

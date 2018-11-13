@@ -4,6 +4,7 @@ import net.markkozel.lc3.AsmFile;
 import net.markkozel.lc3.Instruction;
 import net.markkozel.lc3.ParseSourceCode;
 import net.markkozel.lc3.SymbolTable;
+import net.markkozel.lc3.Shared;
 
 public class Assembler {
 	String asmFileName;
@@ -12,6 +13,7 @@ public class Assembler {
 	AsmFile asmFile = new AsmFile();
 	ParseSourceCode parseSource = new ParseSourceCode();
 	SymbolTable symbolTable = new SymbolTable();
+	Shared shared = Shared.getInstance();
 
 	public static void main(String[] args) {
 		if(args.length < 1){
@@ -29,6 +31,7 @@ public class Assembler {
 	
 	public void loadAsmFile() {
 		System.out.println("Assembling " + asmFileName);
+		shared.updateFileInfo(asmFileName);
 		asmCode = asmFile.readAsmFile(asmFileName);
 		asmInstructions = parseSource.parse(asmCode); //Parse each line
 		
@@ -37,6 +40,8 @@ public class Assembler {
 //		for(Instruction line : asmInstructions){
 //			System.out.println(line.toString());
 //		}
+		
+		symbolTable.toFile();
 	}
 
 }

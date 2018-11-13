@@ -14,5 +14,6 @@ label2 NOT R0 R1
 Label3 .FILL #6
 Label4 .BLKW #10
 Label5 .STRINGZ "test 123 45 6"
+Label6 .FILL #0
 
 .END
