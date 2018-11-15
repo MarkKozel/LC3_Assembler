@@ -10,11 +10,11 @@ public class Instruction_Operate extends Instruction {
 
 //	protected String label;
 //	protected String code;
-	private String destReg;
-	private String srcReg1;
-	private String srcReg2;
-//	protected String value;
+	private String destReg;	//AND, ADD, NOT
+	private String srcReg1;	//AND, ADD, NOT
+	private String srcReg2;	//AND, ADD, NOT
 	private boolean immediate = false; //Mode for AND and ADD
+	private String notFiller = "111111";
 
 	public Instruction_Operate(String line) {
 		super(line);
@@ -87,16 +87,55 @@ public class Instruction_Operate extends Instruction {
 //		return this.label;
 //	}
 	
+	private String regToBin(String regName) {
+		String result = "";
+		
+		if (regName.startsWith("R")) {
+			String reg = regName.substring(1, 2);
+			int regNum = Integer.parseInt(reg);
+			result = Integer.toString(regNum, 2);
+			result = shared.padWithChar(result, 3, "0");
+			//result = String.format("%03s", result);
+		}
+		
+		return result;
+	}
+	
+	public String toBinary(){
+		String result = "";
+		
+		result = this.getOpCode();
+		result += this.regToBin(this.destReg);
+		result += this.regToBin(this.srcReg1);
+		
+		if(this.getCode() == "NOT"){
+			result += this.notFiller;
+		} else { //AND or ADD
+			if(this.immediate){
+				result += "1";
+				result += shared.padWithChar(Integer.toBinaryString(this.getAddress()),5,"0");
+			} else {
+				result += "000";
+				result += this.regToBin(this.srcReg2);
+			}
+		}
+		return result;
+	}
+	
+	public String toHex(){
+		int decimal = Integer.parseInt(this.toBinary(), 2);
+		return Integer.toString(decimal, 16);
+	}
+	
 	public String toString() {
 		String result = this.line;
 
 		if (this.getCode() != null) {
-			//			result = "Operate-> " + this.label + " code: " + this.code + " destR: " + this.destReg + " srcR1: "
-			//					+ this.srcReg1 + " srcR2: " + this.srcReg2 + " value: " + this.value + "IMM?: " + this.immediate;
-
 			String isLabel = this.getLabel() != null ? (this.getLabel() +" ") : "";
 			String isDest2 = (this.srcReg2 != null) ? this.srcReg2 : (this.getValue() + " IMM5");
-			result = "Operate-> " +Integer.toHexString(this.getAddress())+" "+ isLabel + this.getCode() + " " + this.destReg + " " + this.srcReg1 + " " + isDest2;
+			result = "Operate-> " +Integer.toHexString(this.getAddress())+" "+ isLabel + 
+					this.getCode() + " " + this.destReg + " " + this.srcReg1 + " " + isDest2 +
+					"(" + this.toHex() +") " + this.toBinary();
 			;
 		}
 

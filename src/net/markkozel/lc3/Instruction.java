@@ -9,8 +9,9 @@ public class Instruction {
 		PSEUDOOP, COMMENT, OPERATE, DATAMOVEMENT, CONTROL;
 	}
 
-	// private String label;
-	// private String opCode;
+	ISA isa = ISA.getInstance();
+	
+	private String opCode;
 	// private String operands;
 	// private String comments;
 	// private String pseudo;
@@ -32,6 +33,7 @@ public class Instruction {
 	}
 
 	public void setCode(String code) {
+		this.opCode = isa.getOpCodeStr(code.toUpperCase());
 		this.code = code;
 	}
 
@@ -49,6 +51,10 @@ public class Instruction {
 
 	public int getAddress() {
 		return address;
+	}
+	
+	public String getOpCode() {
+		return this.opCode;
 	}
 
 	public void setAddress(int address) {

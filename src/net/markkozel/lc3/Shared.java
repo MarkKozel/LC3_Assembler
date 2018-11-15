@@ -46,4 +46,23 @@ public class Shared {
         return new String(new char[times]).replace("\0", str);
     }
 	
+	/**
+	 * Pads left of str with paddingChar finalLen times
+	 * @param str String to pad
+	 * @param finalLength final length of str when done
+	 * @param paddingChar character to use to pad
+	 * @return
+	 */
+	public String padWithChar(String str, int finalLen, String paddingChar) {
+		String result = str;
+		int currLen = str.length();
+		
+		if(currLen < finalLen){
+			for(int x = 0; x < (finalLen = currLen); x++){
+				result = paddingChar + result;
+			}
+		}
+		return result;
+	}
+	
 }
