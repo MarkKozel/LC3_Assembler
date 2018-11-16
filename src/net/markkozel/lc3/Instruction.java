@@ -10,7 +10,7 @@ public class Instruction {
 	}
 
 	ISA isa = ISA.getInstance();
-	
+
 	private String opCode;
 	// private String operands;
 	// private String comments;
@@ -18,7 +18,30 @@ public class Instruction {
 	protected String label;
 	protected String code;
 	protected String value;
+	protected String immValue;
 	private int address; // updated by Symbol Table as it is updated
+
+	public String getImmValue() {
+		return this.immValue;
+	}
+
+	public boolean setImmValue(String immValue) {
+		boolean result = false;
+		if (immValue.startsWith("x")) {
+
+		} else {
+			if (immValue.startsWith("#")) {
+				String value = immValue.substring(1);
+				
+			} else {
+
+			}
+		}
+		this.opCode = isa.getOpCodeStr(code.toUpperCase());
+		this.immValue = code;
+		
+		return result;
+	}
 
 	public String getLabel() {
 		return this.label;
@@ -52,7 +75,7 @@ public class Instruction {
 	public int getAddress() {
 		return address;
 	}
-	
+
 	public String getOpCode() {
 		return this.opCode;
 	}
@@ -83,24 +106,4 @@ public class Instruction {
 	public Instruction_Type getType() {
 		return this.type;
 	}
-
-	// public void setAdress(int address){
-	// this.address = address;
-	// }
-	//
-	// protected int getAddress(){
-	// return address;
-	// }
-	//
-	// public String getCode() {
-	// return this.code;
-	// }
-	//
-	// public String getValue() {
-	// return this.value;
-	// }
-	//
-	// public String getLabel() {
-	// return this.label;
-	// }
 }

@@ -22,6 +22,9 @@ public class Shared {
 
 	public String baseFilename = "";
 	public String path = "";
+	
+	public final int IMM5_MAX = 15;
+	public final int IMM5_MIN = -16;
 
 	private Shared() {
 

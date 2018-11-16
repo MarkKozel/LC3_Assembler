@@ -15,6 +15,8 @@ public class Instruction_Operate extends Instruction {
 	private String srcReg2;	//AND, ADD, NOT
 	private boolean immediate = false; //Mode for AND and ADD
 	private String notFiller = "111111";
+	
+	
 
 	public Instruction_Operate(String line) {
 		super(line);
@@ -54,8 +56,16 @@ public class Instruction_Operate extends Instruction {
 						}
 					} else { //Not Register. IMM5 or Label
 						if (current.startsWith("#") || current.startsWith("X")) {
+							
+							int immValue = Integer.parseInt(currentOriginal.substring(1));
+							if(immValue >= shared.IMM5_MIN && immValue <= shared.IMM5_MAX){
 							this.setValue(currentOriginal);
 							this.immediate = true;
+							} else{
+								this.isGood = false;
+								this.errorMsg = current + " Imm5 value out of range";
+							}
+								
 						} else { // Must be label
 							this.isGood = false;
 							this.errorMsg = current + " cannot be parsed";
@@ -113,7 +123,8 @@ public class Instruction_Operate extends Instruction {
 		} else { //AND or ADD
 			if(this.immediate){
 				result += "1";
-				result += shared.padWithChar(Integer.toBinaryString(this.getAddress()),5,"0");
+//				result += shared.padWithChar(Integer.toBinaryString(this.getValue()),5,"0");
+				result += shared.padWithChar(this.getValue(), 5, "0");
 			} else {
 				result += "000";
 				result += this.regToBin(this.srcReg2);
@@ -123,7 +134,8 @@ public class Instruction_Operate extends Instruction {
 	}
 	
 	public String toHex(){
-		int decimal = Integer.parseInt(this.toBinary(), 2);
+		String temp = this.toBinary();
+		int decimal = Integer.parseInt(temp, 2);
 		return Integer.toString(decimal, 16);
 	}
 	
