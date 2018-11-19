@@ -5,48 +5,77 @@ package net.markkozel.lc3;
 
 public class Instruction {
 
-	enum Instruction_Type {
-		PSEUDOOP, COMMENT, OPERATE, DATAMOVEMENT, CONTROL;
-	}
-
-	ISA isa = ISA.getInstance();
-
 	private String opCode;
-	// private String operands;
-	// private String comments;
-	// private String pseudo;
 	protected String label;
 	protected String code;
 	protected String value;
 	protected String immValue;
 	private int address; // updated by Symbol Table as it is updated
 
+	public enum Instruction_Type {
+		PSEUDOOP, COMMENT, OPERATE, DATAMOVEMENT, CONTROL;
+	};
+
+	ISA isa = ISA.getInstance();
+	Shared shared = Shared.getInstance();
+
+	private Instruction_Type type;
+
+	protected String line;
+	protected String[] tokens;
+
+	protected String delimit = "[ ]+";
+
+	protected boolean isGood = true;
+	protected String errorMsg = "";
+
+	/**
+	 * Constructor
+	 */
+	public Instruction() {
+	}
+
+	/**
+	 * Store Immediate Value
+	 * 
+	 * @return Immediate value
+	 */
 	public String getImmValue() {
 		return this.immValue;
 	}
 
+	/**
+	 * Gets Immediate value
+	 * 
+	 * @param immValue
+	 *            Value to store
+	 * @return true is Immediate value is valid
+	 */
 	public boolean setImmValue(String immValue) {
 		boolean result = false;
-		if (immValue.startsWith("x")) {
-
-		} else {
-			if (immValue.startsWith("#")) {
-				String value = immValue.substring(1);
-				
-			} else {
-
-			}
+		String value = shared.immToAddress(immValue, 5);
+		if (value != null) {
+			this.immValue = value;
+			result = true;
 		}
-		this.opCode = isa.getOpCodeStr(code.toUpperCase());
-		this.immValue = code;
-		
 		return result;
 	}
 
+	/**
+	 * Gets label
+	 * 
+	 * @return label
+	 */
 	public String getLabel() {
 		return this.label;
 	}
 
+	/**
+	 * Sets label
+	 * 
+	 * @param label
+	 *            LC-3 label
+	 */
 	public void setLabel(String label) {
 		this.label = label;
 	}
@@ -83,16 +112,6 @@ public class Instruction {
 	public void setAddress(int address) {
 		this.address = address;
 	}
-
-	private Instruction_Type type;
-
-	protected String line;
-	protected String[] tokens;
-
-	protected String delimit = "[ ]+";
-
-	protected boolean isGood = true;
-	protected String errorMsg = "";
 
 	public Instruction(String line) {
 		this.line = line;

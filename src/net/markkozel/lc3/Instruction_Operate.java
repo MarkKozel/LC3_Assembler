@@ -8,15 +8,13 @@ public class Instruction_Operate extends Instruction {
 
 	Shared shared = Shared.getInstance();
 
-//	protected String label;
-//	protected String code;
-	private String destReg;	//AND, ADD, NOT
-	private String srcReg1;	//AND, ADD, NOT
-	private String srcReg2;	//AND, ADD, NOT
-	private boolean immediate = false; //Mode for AND and ADD
+	// protected String label;
+	// protected String code;
+	private String destReg; // AND, ADD, NOT
+	private String srcReg1; // AND, ADD, NOT
+	private String srcReg2; // AND, ADD, NOT
+	private boolean immediate = false; // Mode for AND and ADD
 	private String notFiller = "111111";
-	
-	
 
 	public Instruction_Operate(String line) {
 		super(line);
@@ -32,7 +30,8 @@ public class Instruction_Operate extends Instruction {
 
 		while (tokens.hasMoreTokens()) {
 			String currentOriginal = tokens.nextToken(); // Preserves case
-			String current = currentOriginal.toUpperCase(); // Uppercase for comparison
+			String current = currentOriginal.toUpperCase(); // Uppercase for
+															// comparison
 
 			if (shared.OpCodeOperateList.contains(current) && (this.getCode() == null)) { // Op
 				this.setCode(current);
@@ -41,7 +40,7 @@ public class Instruction_Operate extends Instruction {
 				}
 			} else {
 				if (this.getCode() != null) {
-					if (current.startsWith("R")) { //Register
+					if (current.startsWith("R")) { // Register
 						if (destReg == null) {
 							destReg = current;
 						} else {
@@ -54,23 +53,33 @@ public class Instruction_Operate extends Instruction {
 								}
 							}
 						}
-					} else { //Not Register. IMM5 or Label
+					} else { // Not Register. IMM5 or Label
 						if (current.startsWith("#") || current.startsWith("X")) {
-							
-							int immValue = Integer.parseInt(currentOriginal.substring(1));
-							if(immValue >= shared.IMM5_MIN && immValue <= shared.IMM5_MAX){
-							this.setValue(currentOriginal);
-							this.immediate = true;
-							} else{
+							String value = shared.immToAddress(current, 5);
+							if (value != null) {
+								this.setImmValue(currentOriginal);
+								this.immediate = true;
+							} else {
 								this.isGood = false;
 								this.errorMsg = current + " Imm5 value out of range";
 							}
-								
+							// int immValue =
+							// Integer.parseInt(currentOriginal.substring(1));
+							// if(immValue >= shared.IMM5_MIN && immValue <=
+							// shared.IMM5_MAX){
+							// this.setImmValue(currentOriginal);
+							// this.immediate = true;
+							// } else{
+							// this.isGood = false;
+							// this.errorMsg = current + " Imm5 value out of
+							// range";
+							// }
+
 						} else { // Must be label
 							this.isGood = false;
 							this.errorMsg = current + " cannot be parsed";
-						} //else label
-					} //else "R"
+						} // else label
+					} // else "R"
 				} else { // Must be label
 					if (this.getLabel() == null) {
 						this.setLabel(current);
@@ -78,76 +87,67 @@ public class Instruction_Operate extends Instruction {
 						this.isGood = false;
 						this.errorMsg = current + " cannot be parsed";
 					}
-				} //else label
+				} // else label
 
 			}
-		} //While
+		} // While
 
-	}//method
+	}// method
 
-//	public String getCode() {
-//		return this.code;
-//	}
-//	
-//	public String getValue() {
-//		return this.value;
-//	}
-//	
-//	public String getLabel() {
-//		return this.label;
-//	}
-	
-	private String regToBin(String regName) {
+	// private String regToBin(String regName) {
+	// String result = "";
+	//
+	// if (regName.startsWith("R")) {
+	// String reg = regName.substring(1, 2);
+	// int regNum = Integer.parseInt(reg);
+	// result = Integer.toString(regNum, 2);
+	// result = shared.padWithChar(result, 3, "0");
+	// // result = String.format("%03s", result);
+	// }
+	//
+	// return result;
+	// }
+
+	public String toBinary() {
 		String result = "";
-		
-		if (regName.startsWith("R")) {
-			String reg = regName.substring(1, 2);
-			int regNum = Integer.parseInt(reg);
-			result = Integer.toString(regNum, 2);
-			result = shared.padWithChar(result, 3, "0");
-			//result = String.format("%03s", result);
-		}
-		
-		return result;
-	}
-	
-	public String toBinary(){
-		String result = "";
-		
+
 		result = this.getOpCode();
-		result += this.regToBin(this.destReg);
-		result += this.regToBin(this.srcReg1);
-		
-		if(this.getCode() == "NOT"){
+		result += shared.regToAddress(this.destReg);
+		result += shared.regToAddress(this.srcReg1);
+
+		if (this.getCode() == "NOT") {
 			result += this.notFiller;
-		} else { //AND or ADD
-			if(this.immediate){
+		} else { // AND or ADD
+			if (this.immediate) {
 				result += "1";
-//				result += shared.padWithChar(Integer.toBinaryString(this.getValue()),5,"0");
-				result += shared.padWithChar(this.getValue(), 5, "0");
+				// result +=
+				// shared.padWithChar(Integer.toBinaryString(this.getValue()),5,"0");
+				// result += shared.padWithChar(this.getValue(), 5, "0");
+				result += shared.immToAddress(this.getImmValue(), 5);
 			} else {
-				result += "000";
-				result += this.regToBin(this.srcReg2);
+				result += "0";
+				result += "00";
+				// result += this.regToBin(this.srcReg2);
+				result += shared.regToAddress(this.srcReg2);
 			}
 		}
 		return result;
 	}
-	
-	public String toHex(){
+
+	public String toHex() {
 		String temp = this.toBinary();
 		int decimal = Integer.parseInt(temp, 2);
 		return Integer.toString(decimal, 16);
 	}
-	
+
 	public String toString() {
 		String result = this.line;
 
 		if (this.getCode() != null) {
-			String isLabel = this.getLabel() != null ? (this.getLabel() +" ") : "";
+			String isLabel = this.getLabel() != null ? (this.getLabel() + " ") : "";
 			String isDest2 = (this.srcReg2 != null) ? this.srcReg2 : (this.getValue() + " IMM5");
-			result = "Operate-> " +Integer.toHexString(this.getAddress())+" "+ isLabel + 
-					this.getCode() + " " + this.destReg + " " + this.srcReg1 + " " + isDest2 +
-					"(" + this.toHex() +") " + this.toBinary();
+			result = "Operate-> " + Integer.toHexString(this.getAddress()) + " " + isLabel + this.getCode() + " "
+					+ this.destReg + " " + this.srcReg1 + " " + isDest2 + "(x" + this.toHex() + ") " + this.toBinary();
 			;
 		}
 

@@ -83,25 +83,26 @@ public class Shared {
 		String result = "";
 		int regNumber;
 
-		if (regName.length() != 2) {//Invalid Reg Name
+		if (regName.length() != 2) {// Invalid Reg Name
 			return null;
 		}
 
-		if (!regName.toUpperCase().startsWith("R")) { //Doesn't start with r/R
+		if (!regName.toUpperCase().startsWith("R")) { // Doesn't start with r/R
 			return null;
 		}
 
 		try {
 			regNumber = Integer.parseInt(regName.substring(1));
-		} catch (NumberFormatException e) { //Not a number
+		} catch (NumberFormatException e) { // Not a number
 			return null;
 		}
 
-		if (regNumber > 7) {//R8 and R9 are invalid reg numbers
+		if (regNumber > 7) {// R8 and R9 are invalid reg numbers
 			return null;
 		}
 
-		//OK, got good Reg Name and Number. Convert to 3-bit address and return as string
+		// OK, got good Reg Name and Number.
+		// Convert to 3-bit address and return as string
 		result = padWithChar(Integer.toBinaryString(regNumber), 3, "0");
 
 		return result;
@@ -120,29 +121,28 @@ public class Shared {
 		String result = "";
 		int immValue;
 
-		if (!(immName.toUpperCase().startsWith("#") || immName.toUpperCase().startsWith("X"))) {//bad imm tag (#/x)
+		if (!(immName.toUpperCase().startsWith("#") || immName.toUpperCase().startsWith("X"))) {
+			// bad imm tag (#/x)
 			return null;
 		}
 
-		if (immName.toUpperCase().startsWith("#")) { //Decimal Value
-			try { //Make sure value is number
+		if (immName.toUpperCase().startsWith("#")) { // Decimal Value
+			try { // Make sure value is number
 				immValue = Integer.parseInt(immName.substring(1));
-			} catch (NumberFormatException e) { //Not a number
+			} catch (NumberFormatException e) { // Not a number
 				return null;
 			}
 			result = padWithChar(Integer.toBinaryString(immValue), numBits, "0");
 		}
 
-		if (immName.toUpperCase().startsWith("X")) { //Decimal Value
-			try { //Make sure value is number
+		if (immName.toUpperCase().startsWith("X")) { // Decimal Value
+			try { // Make sure value is number
 				immValue = Integer.parseInt(immName.substring(1), 16);
-			} catch (NumberFormatException e) { //Not a number
+			} catch (NumberFormatException e) { // Not a number
 				return null;
 			}
-
 			result = padWithChar(Integer.toBinaryString(immValue), numBits, "0");
 		}
-
 		return result;
 	}
 

@@ -1,8 +1,10 @@
-package net.markkozel.lc3;
+package net.markkozel.lc3.test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import net.markkozel.lc3.Shared;
 
 public class testShared {
 	public Shared shared;
