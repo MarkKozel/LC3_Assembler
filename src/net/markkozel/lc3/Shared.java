@@ -38,6 +38,27 @@ public class Shared {
 		return instance;
 	}
 
+	/**
+	 * Converts value to 2's complement bit string of set length. 
+	 * toBinaryString() perform the conversion and 2's complement operation.
+	 * @param value number to convert to bit string
+	 * @param length desired length of resulting bit string
+	 * @return bit string representation of value set to length
+	 */
+	public String twosComp(int value, int length) {
+		String result = "";
+		String bitStr = padWithChar(Integer.toBinaryString(value), length, "0");
+
+		if (value < 0) { //perform 2's complement
+			for (int x = bitStr.length()-1; x >= (bitStr.length() - length); x--) {
+				result = bitStr.charAt(x) + result;
+			}
+		} else {
+			result = bitStr; //Pos number, no 2's comp
+		}
+		return result;
+	}
+
 	public void updateFileInfo(String fileRef) {
 		Path p = Paths.get(fileRef);
 		this.baseFilename = p.getFileName().toString();

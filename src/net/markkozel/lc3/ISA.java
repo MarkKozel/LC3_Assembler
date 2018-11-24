@@ -29,7 +29,7 @@ public class ISA {
 	public String getOpCodeStr(String opName) {
 		String result = "0000"; //NOP
 		if (ISAOpCodes.containsKey(opName)) {
-			result = Integer.toBinaryString(ISAOpCodes.get(opName));
+			result = String.format("%4s",Integer.toBinaryString(ISAOpCodes.get(opName))).replace(' ', '0');
 		}
 		return result;
 	}

@@ -30,8 +30,9 @@ public class Instruction_Operate extends Instruction {
 
 		while (tokens.hasMoreTokens()) {
 			String currentOriginal = tokens.nextToken(); // Preserves case
-			String current = currentOriginal.toUpperCase(); // Uppercase for
-															// comparison
+			currentOriginal = currentOriginal.replaceAll(",$", "");
+			// Uppercase for comparison
+			String current = currentOriginal.toUpperCase();
 
 			if (shared.OpCodeOperateList.contains(current) && (this.getCode() == null)) { // Op
 				this.setCode(current);
@@ -55,29 +56,16 @@ public class Instruction_Operate extends Instruction {
 						}
 					} else { // Not Register. IMM5 or Label
 						if (current.startsWith("#") || current.startsWith("X")) {
-							String value = shared.immToAddress(current, 5);
-							if (value != null) {
-								this.setImmValue(currentOriginal);
+							if (this.setImmValue(current)) {
 								this.immediate = true;
 							} else {
 								this.isGood = false;
 								this.errorMsg = current + " Imm5 value out of range";
 							}
-							// int immValue =
-							// Integer.parseInt(currentOriginal.substring(1));
-							// if(immValue >= shared.IMM5_MIN && immValue <=
-							// shared.IMM5_MAX){
-							// this.setImmValue(currentOriginal);
-							// this.immediate = true;
-							// } else{
-							// this.isGood = false;
-							// this.errorMsg = current + " Imm5 value out of
-							// range";
-							// }
 
 						} else { // Must be label
 							this.isGood = false;
-							this.errorMsg = current + " cannot be parsed";
+							this.errorMsg = current + " cannot be parsed"; //~
 						} // else label
 					} // else "R"
 				} else { // Must be label
@@ -88,25 +76,9 @@ public class Instruction_Operate extends Instruction {
 						this.errorMsg = current + " cannot be parsed";
 					}
 				} // else label
-
 			}
 		} // While
-
 	}// method
-
-	// private String regToBin(String regName) {
-	// String result = "";
-	//
-	// if (regName.startsWith("R")) {
-	// String reg = regName.substring(1, 2);
-	// int regNum = Integer.parseInt(reg);
-	// result = Integer.toString(regNum, 2);
-	// result = shared.padWithChar(result, 3, "0");
-	// // result = String.format("%03s", result);
-	// }
-	//
-	// return result;
-	// }
 
 	public String toBinary() {
 		String result = "";
@@ -115,19 +87,15 @@ public class Instruction_Operate extends Instruction {
 		result += shared.regToAddress(this.destReg);
 		result += shared.regToAddress(this.srcReg1);
 
-		if (this.getCode() == "NOT") {
+		if (this.getCode().equals("NOT")) {
 			result += this.notFiller;
 		} else { // AND or ADD
 			if (this.immediate) {
 				result += "1";
-				// result +=
-				// shared.padWithChar(Integer.toBinaryString(this.getValue()),5,"0");
-				// result += shared.padWithChar(this.getValue(), 5, "0");
 				result += shared.immToAddress(this.getImmValue(), 5);
 			} else {
 				result += "0";
 				result += "00";
-				// result += this.regToBin(this.srcReg2);
 				result += shared.regToAddress(this.srcReg2);
 			}
 		}

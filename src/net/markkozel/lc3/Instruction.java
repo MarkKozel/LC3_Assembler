@@ -35,6 +35,14 @@ public class Instruction {
 	public Instruction() {
 	}
 
+	public boolean getIsGood(){
+		return this.isGood;
+	}
+	
+	public String getErrorMsg(){
+		return this.errorMsg;
+	}
+	
 	/**
 	 * Store Immediate Value
 	 * 
@@ -55,7 +63,7 @@ public class Instruction {
 		boolean result = false;
 		String value = shared.immToAddress(immValue, 5);
 		if (value != null) {
-			this.immValue = value;
+			this.immValue = immValue;
 			result = true;
 		}
 		return result;
