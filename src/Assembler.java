@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 
 import net.markkozel.lc3.AsmFile;
+import net.markkozel.lc3.GenerateExecutables;
 import net.markkozel.lc3.Instruction;
-import net.markkozel.lc3.ListingGenerator;
+import net.markkozel.lc3.GenerateListing;
 import net.markkozel.lc3.ParseSourceCode;
-import net.markkozel.lc3.SymbolTable;
+import net.markkozel.lc3.GenerateSymbolTable;
 import net.markkozel.lc3.Shared;
 
 public class Assembler {
@@ -13,8 +14,9 @@ public class Assembler {
 	ArrayList<Instruction> asmInstructions = new ArrayList<Instruction>();
 	AsmFile asmFile = new AsmFile();
 	ParseSourceCode parseSource = new ParseSourceCode();
-	SymbolTable symbolTable = new SymbolTable();
-	ListingGenerator lstGenerator;
+	GenerateSymbolTable symbolTable = new GenerateSymbolTable();
+	GenerateListing lstGenerator = new GenerateListing();
+	GenerateExecutables exeGenerator = new GenerateExecutables();
 	Shared shared = Shared.getInstance();
 
 	public static void main(String[] args) {
@@ -37,11 +39,12 @@ public class Assembler {
 		asmCode = asmFile.readAsmFile(asmFileName);
 		asmInstructions = parseSource.parse(asmCode); //Parse each line
 		
-		symbolTable.buildSymbolTable(asmInstructions);		
+		symbolTable.build(asmInstructions);		
 		symbolTable.toFile();
 		
-		lstGenerator = new ListingGenerator(symbolTable.asmSymbols, asmInstructions);
-		lstGenerator.toFile();
+		//lstGenerator.toFile(symbolTable.asmSymbols, asmInstructions);
+		
+		exeGenerator.toFile(symbolTable.asmSymbols, asmInstructions);
 	}
 
 }

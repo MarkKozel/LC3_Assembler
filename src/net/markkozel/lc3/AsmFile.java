@@ -5,20 +5,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class AsmFile extends LC3_FileTypeParent implements LC3_FileTypeTemplate {
+public class AsmFile {
 
 	public String fileExt = ".asm";
 	private String AsmFileName;
 	ArrayList<String> asmCode = new ArrayList<String>();
 
 	public AsmFile() {
-		super();
+//		super();
 	}
 
-	@Override
-	public void writeFile() {
-		super.writeFile();
-	}
+//	@Override
+//	public void writeFile() {
+//		super.writeFile();
+//	}
 
 	/**
 	 * 

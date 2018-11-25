@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 //public class SymbolTable extends LC3_FileTypeParent implements LC3_FileTypeTemplate{
-public class SymbolTable {
+public class GenerateSymbolTable {
 
 	Shared shared = Shared.getInstance();
 
@@ -15,11 +15,11 @@ public class SymbolTable {
 	private int addressOffset = 0;
 	public ArrayList<Symbol> asmSymbols = new ArrayList<Symbol>();
 
-	public SymbolTable() {
+	public GenerateSymbolTable() {
 		super();
 	}
 
-	public boolean buildSymbolTable(ArrayList<Instruction> asmInstructions) {
+	public boolean build(ArrayList<Instruction> asmInstructions) {
 		boolean result = true;
 
 		for (Instruction line : asmInstructions) {
@@ -40,7 +40,7 @@ public class SymbolTable {
 					line.setAddress(startingAddress + addressOffset);
 
 					if (line.getLabel() != null) {
-						asmSymbols.add(new Symbol(line.getLabel(), line.getAddress()));
+						asmSymbols.add(new Symbol(line.getLabel().toUpperCase(), line.getAddress()));
 					}
 
 					System.out.println(line.toString());
