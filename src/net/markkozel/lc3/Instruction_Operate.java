@@ -16,8 +16,8 @@ public class Instruction_Operate extends Instruction {
 	private boolean immediate = false; // Mode for AND and ADD
 	private String notFiller = "111111";
 
-	public Instruction_Operate(String line) {
-		super(line);
+	public Instruction_Operate(String line, int lineNumber) {
+		super(line, lineNumber);
 		setType(Instruction_Type.OPERATE);
 
 		StringTokenizer tokens = new StringTokenizer(line, " ");

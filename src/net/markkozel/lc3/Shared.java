@@ -39,22 +39,25 @@ public class Shared {
 	}
 
 	/**
-	 * Converts value to 2's complement bit string of set length. 
+	 * Converts value to 2's complement bit string of set length.
 	 * toBinaryString() perform the conversion and 2's complement operation.
-	 * @param value number to convert to bit string
-	 * @param length desired length of resulting bit string
+	 * 
+	 * @param value
+	 *            number to convert to bit string
+	 * @param length
+	 *            desired length of resulting bit string
 	 * @return bit string representation of value set to length
 	 */
 	public String twosComp(int value, int length) {
 		String result = "";
 		String bitStr = padWithChar(Integer.toBinaryString(value), length, "0");
 
-		if (value < 0) { //perform 2's complement
-			for (int x = bitStr.length()-1; x >= (bitStr.length() - length); x--) {
+		if (value < 0) { // perform 2's complement
+			for (int x = bitStr.length() - 1; x >= (bitStr.length() - length); x--) {
 				result = bitStr.charAt(x) + result;
 			}
 		} else {
-			result = bitStr; //Pos number, no 2's comp
+			result = bitStr; // Pos number, no 2's comp
 		}
 		return result;
 	}
@@ -153,7 +156,9 @@ public class Shared {
 			} catch (NumberFormatException e) { // Not a number
 				return null;
 			}
-			result = padWithChar(Integer.toBinaryString(immValue), numBits, "0");
+			if ((immValue <= IMM5_MAX) && (immValue >= IMM5_MIN)) {
+				result = padWithChar(Integer.toBinaryString(immValue), numBits, "0");
+			}
 		}
 
 		if (immName.toUpperCase().startsWith("X")) { // Decimal Value
@@ -162,7 +167,9 @@ public class Shared {
 			} catch (NumberFormatException e) { // Not a number
 				return null;
 			}
-			result = padWithChar(Integer.toBinaryString(immValue), numBits, "0");
+			if ((immValue <= IMM5_MAX) && (immValue >= IMM5_MIN)) {
+				result = padWithChar(Integer.toBinaryString(immValue), numBits, "0");
+			}
 		}
 		return result;
 	}

@@ -9,8 +9,8 @@ public class Instruction_DataMovement extends Instruction {
 //	protected String code;
 //	protected String value;
 
-	public Instruction_DataMovement(String line) {
-		super(line);
+	public Instruction_DataMovement(String line, int lineNumber) {
+		super(line, lineNumber);
 		setType(Instruction_Type.DATAMOVEMENT);
 
 		//this.tokens = this.line.split(this.delimit);

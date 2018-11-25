@@ -10,8 +10,8 @@ public class Instruction_PseudoCodes extends Instruction {
 //	protected String code;
 //	protected String value = "";
 
-	public Instruction_PseudoCodes(String line) {
-		super(line);
+	public Instruction_PseudoCodes(String line, int lineNumber) {
+		super(line, lineNumber);
 		setType(Instruction_Type.PSEUDOOP);
 
 		StringTokenizer tokens = new StringTokenizer(line, " ");

@@ -5,6 +5,7 @@ package net.markkozel.lc3;
 
 public class Instruction {
 
+	protected int lineNumber = 0; //Source code line
 	private String opCode;
 	protected String label;
 	protected String code;
@@ -32,7 +33,17 @@ public class Instruction {
 	/**
 	 * Constructor
 	 */
-	public Instruction() {
+	public Instruction(String line, int lineNumber) {
+		this.line = line;
+		this.lineNumber = lineNumber;
+	}
+
+	public int getLineNumber() {
+		return lineNumber;
+	}
+
+	public void setLineNumber(int lineNumber) {
+		this.lineNumber = lineNumber;
 	}
 
 	public boolean getIsGood(){
@@ -62,7 +73,8 @@ public class Instruction {
 	public boolean setImmValue(String immValue) {
 		boolean result = false;
 		String value = shared.immToAddress(immValue, 5);
-		if (value != null) {
+		
+		if ((value != null) && (value.length() == 5)) {
 			this.immValue = immValue;
 			result = true;
 		}

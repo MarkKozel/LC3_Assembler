@@ -13,7 +13,7 @@ public class SymbolTable {
 	public String fileExt = ".sym";
 	private int startingAddress = 0;
 	private int addressOffset = 0;
-	ArrayList<Symbol> asmSymbols = new ArrayList<Symbol>();
+	public ArrayList<Symbol> asmSymbols = new ArrayList<Symbol>();
 
 	public SymbolTable() {
 		super();
@@ -22,18 +22,12 @@ public class SymbolTable {
 	public boolean buildSymbolTable(ArrayList<Instruction> asmInstructions) {
 		boolean result = true;
 
-		// if (asmInstructions.get(0).getCode().equals(".ORIG")) {
-		// String sAddr = asmInstructions.get(0).getValue();
-		// startingAddress = Integer.parseInt(sAddr, 16);
-		// }
 		for (Instruction line : asmInstructions) {
 
 			if (line.getCode() != null) { // Skip comments
 				if (line.getCode().equals(".ORIG")) {
-					String sAddr = line.getValue().substring(1); // remove
-																	// leading
-																	// 'x'
-
+					// remove leading 'x'
+					String sAddr = line.getValue().substring(1); 
 					try {
 						startingAddress = Integer.parseInt(sAddr, 16);
 					} catch (NumberFormatException nfe) {

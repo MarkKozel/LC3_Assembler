@@ -9,8 +9,8 @@ public class Instruction_Control extends Instruction {
 //	protected String code;
 //	protected String value;
 
-	public Instruction_Control(String line) {
-		super(line);
+	public Instruction_Control(String line, int lineNumber) {
+		super(line, lineNumber);
 		setType(Instruction_Type.CONTROL);
 
 		//this.tokens = this.line.split(this.delimit);

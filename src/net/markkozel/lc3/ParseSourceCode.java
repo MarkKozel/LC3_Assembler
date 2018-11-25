@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class ParseSourceCode {
 	
 	Shared shared = Shared.getInstance();
+	private int lineNumber = 0;
 
 	public ParseSourceCode() {
 
@@ -30,24 +31,24 @@ public class ParseSourceCode {
 			line.trim();
 
 			if (line.startsWith(";")) {
-				instructions.add(new Instruction_Comment(line));
+				instructions.add(new Instruction_Comment(line, lineNumber));
 			} else {
 				tokens = line.split(delimit);
 				for (String code : tokens) {
 					if (shared.OpCodeOperateList.contains(code)) {
-						instructions.add(new Instruction_Operate(line));
+						instructions.add(new Instruction_Operate(line, lineNumber));
 						break;
 					}
 					if (shared.OpCodeDataList.contains(code)) {
-						instructions.add(new Instruction_DataMovement(line));
+						instructions.add(new Instruction_DataMovement(line, lineNumber));
 						break;
 					}
 					if (shared.OpCodeControlList.contains(code)) {
-						instructions.add(new Instruction_Control(line));
+						instructions.add(new Instruction_Control(line, lineNumber));
 						break;
 					}
 					if (shared.PseudoOpsList.contains(code)) {
-						instructions.add(new Instruction_PseudoCodes(line));
+						instructions.add(new Instruction_PseudoCodes(line, lineNumber));
 						break;
 					}
 				}

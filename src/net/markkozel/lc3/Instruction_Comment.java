@@ -7,8 +7,8 @@ public class Instruction_Comment extends Instruction {
 
 	protected String comment;
 
-	public Instruction_Comment(String line) {
-		super(line);
+	public Instruction_Comment(String line, int lineNumber) {
+		super(line, lineNumber);
 		setType(Instruction_Type.COMMENT);
 		this.comment = line;
 	}

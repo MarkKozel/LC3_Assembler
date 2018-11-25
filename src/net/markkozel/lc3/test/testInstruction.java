@@ -8,7 +8,7 @@ import net.markkozel.lc3.Instruction;
 
 public class testInstruction {
 
-	Instruction inst = new Instruction();
+	Instruction inst = new Instruction("line", 1);
 	
 	@Test
 	public final void testSetGetImmValue() {
