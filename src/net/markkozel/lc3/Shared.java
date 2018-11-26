@@ -78,11 +78,11 @@ public class Shared {
 	 * 
 	 * @param str
 	 *            String to pad
-	 * @param finalLength
+	 * @param finalLen
 	 *            final length of str when done
 	 * @param paddingChar
 	 *            character to use to pad
-	 * @return
+	 * @return String padded with paddingChar of length finalLen
 	 */
 	public String padWithChar(String str, int finalLen, String paddingChar) {
 		String result = str;

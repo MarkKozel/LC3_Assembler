@@ -2,7 +2,7 @@ package net.markkozel.lc3;
 
 /**
  * Contains a single symbol
- * @author mark
+ * @author Mark Kozel
  *
  */
 public class Symbol {

@@ -2,20 +2,64 @@ package net.markkozel.lc3;
 
 import java.util.StringTokenizer;
 
-//import net.markkozel.lc3.Instruction.Instruction_Type;
-
+/**
+ * Container for LC-3 Operate Instructions
+ * <p>
+ * LC-3 Operate instructions:
+ * <ul>
+ * <li>ADD - Addition for Register-only and Register-Immediate Value
+ * <li>AND - Logical And Register-only and Register-Immediate Value
+ * <li>NOT - Logical Not Register-Only
+ * </UL>
+ * 
+ * <p>
+ * Container parses Operate source code into binary values for OpCode and
+ * Operands If line is invalid, container sets {@link isGood} and
+ * {@link errorMsg}
+ * 
+ * @author Mark Kozel
+ *
+ */
 public class Instruction_Operate extends Instruction {
 
+	/**
+	 * {@link Shared} instance for conversion utils
+	 */
 	Shared shared = Shared.getInstance();
 
-	// protected String label;
-	// protected String code;
-	private String destReg; // AND, ADD, NOT
-	private String srcReg1; // AND, ADD, NOT
-	private String srcReg2; // AND, ADD, NOT
-	private boolean immediate = false; // Mode for AND and ADD
+	/**
+	 * Holds Destination Register
+	 */
+	private String destReg;
+	/**
+	 * Holds Source Register 1
+	 */
+	private String srcReg1;
+	/**
+	 * Holds Source Register 2 if applicable
+	 */
+	private String srcReg2;
+	/**
+	 * Flag to indicate Immediate Value is used
+	 */
+	private boolean immediate = false;
+
+	/**
+	 * Filler bits for unused part of NOT's Operands
+	 */
 	private String notFiller = "111111";
 
+	/**
+	 * Created new Instruction_Operate object and populates
+	 * {@link Instruction_Operate} and {@link Instruction} fields If line does
+	 * not parse correctly, isGood and errMsg are set accordingly
+	 * 
+	 * @param line
+	 *            source code line
+	 * @param lineNumber
+	 *            line number of source code line, including blank and comment
+	 *            lines
+	 */
 	public Instruction_Operate(String line, int lineNumber) {
 		super(line, lineNumber);
 		setType(Instruction_Type.OPERATE);
@@ -65,7 +109,7 @@ public class Instruction_Operate extends Instruction {
 
 						} else { // Must be label
 							this.isGood = false;
-							this.errorMsg = current + " cannot be parsed"; //~
+							this.errorMsg = current + " cannot be parsed"; // ~
 						} // else label
 					} // else "R"
 				} else { // Must be label
@@ -80,6 +124,11 @@ public class Instruction_Operate extends Instruction {
 		} // While
 	}// method
 
+	/**
+	 * Converts elements into bit string
+	 * 
+	 * @return String of 16-bit representation
+	 */
 	public String toBinary() {
 		String result = "";
 
@@ -102,12 +151,22 @@ public class Instruction_Operate extends Instruction {
 		return result;
 	}
 
+	/**
+	 * Converts elements into hex string
+	 * 
+	 * @return String of base-16 representation
+	 */
 	public String toHex() {
 		String temp = this.toBinary();
 		int decimal = Integer.parseInt(temp, 2);
 		return Integer.toString(decimal, 16);
 	}
 
+	/**
+	 * Debugging string output of elements
+	 * 
+	 * @return String breakdown of elements
+	 */
 	public String toString() {
 		String result = this.line;
 

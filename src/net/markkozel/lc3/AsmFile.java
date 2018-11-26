@@ -20,11 +20,11 @@ public class AsmFile {
 //		super.writeFile();
 //	}
 
-	/**
-	 * 
-	 * @param fileName
-	 *            path and name of source (asm) file
-	 */
+/**
+ * Read source code from fileName and pack in asmCode String Array
+ * @param fileName path and name of source (asm) file
+ * @return String Array {@link asmCode} containing all source lines
+ */
 	public ArrayList<String> readAsmFile(String fileName) {
 		AsmFileName = fileName;
 		String currentLine;

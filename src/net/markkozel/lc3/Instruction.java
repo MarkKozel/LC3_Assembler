@@ -1,38 +1,94 @@
 package net.markkozel.lc3;
 
-//import java.util.Arrays;
-//import java.util.List;
-
+/**
+ * Instructions parent class
+ * 
+ * <p>Maintains information common to all LC-3 instructions:
+ * <ul>
+ * <li>Comments (not technically an instruction, but maintained for line numbers)
+ * <li>Control - Branches and jumps
+ * <li>Data Movement - Load and Store
+ * <li>Operate - ADD,AND, NOT
+ * <li>Pseudo Ops - runtime settings
+ * </ul> {@link Shared}
+ * @author Mark Kozel
+ *
+ */
 public class Instruction {
 
-	protected int lineNumber = 0; //Source code line
+	/**
+	 * Source code line number
+	 */
+	protected int lineNumber = 0;
+	/**
+	 * LC-3 Op Code
+	 */
 	private String opCode;
+	/**
+	 * LC-3 Label text, if present
+	 */
 	protected String label;
 	protected String code;
 	protected String value;
+	/**
+	 * LC-3 Immediate Value, if present
+	 */
 	protected String immValue;
+	/**
+	 * Memory Address for this instruction, based on .ORIG and Line Number
+	 */
 	private int address; // updated by Symbol Table as it is updated
 
+	/**
+	 * Reference for separating LC-3 Instruction Type
+	 *
+	 */
 	public enum Instruction_Type {
 		PSEUDOOP, COMMENT, OPERATE, DATAMOVEMENT, CONTROL;
 	};
 
+	/**
+	 * {@link ISA} instance for parsing
+	 */
 	ISA isa = ISA.getInstance();
+	/**
+	 * {@link Shared} instance for conversion utils
+	 */
 	Shared shared = Shared.getInstance();
 
+	/**
+	 * LC-3 Instruction Type based on {@link Instruction_Type}
+	 */
 	private Instruction_Type type;
 
+	/**
+	 * Raw source code
+	 */
 	protected String line;
+	/**
+	 * Container for parsing parts of source elements
+	 */
 	protected String[] tokens;
 
+	/**
+	 * 1 or more spaces used to delimit source code tokens
+	 */
 	protected String delimit = "[ ]+";
 
+	/**
+	 * Flag to indicate that source code represents a valid LC-3 instruction
+	 */
 	protected boolean isGood = true;
+	/**
+	 * Error message, is needed, for invalid LC-3 instruction during parsing
+	 */
 	protected String errorMsg = "";
 
-	/**
-	 * Constructor
-	 */
+/**
+ * Constructor, called from child class
+ * @param line source code line
+ * @param lineNumber line number of source code line, including blank and comment lines
+ */
 	public Instruction(String line, int lineNumber) {
 		this.line = line;
 		this.lineNumber = lineNumber;
