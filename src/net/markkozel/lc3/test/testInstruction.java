@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import net.markkozel.lc3.Instruction;
+import net.markkozel.lc3.Instructions.Instruction;
 
 public class testInstruction {
 

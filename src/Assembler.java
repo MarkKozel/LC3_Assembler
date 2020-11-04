@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 import net.markkozel.lc3.AsmFile;
 import net.markkozel.lc3.GenerateExecutables;
-import net.markkozel.lc3.Instruction;
 import net.markkozel.lc3.GenerateListing;
 import net.markkozel.lc3.ParseSourceCode;
 import net.markkozel.lc3.GenerateSymbolTable;
 import net.markkozel.lc3.Shared;
+import net.markkozel.lc3.Instructions.Instruction;
 
 public class Assembler {
 	String asmFileName;
@@ -30,6 +30,9 @@ public class Assembler {
 		assembler.asmFileName = args[0];
 		assembler.loadAsmFile();
 		
+		assembler.pass1();
+		
+		assembler.generateOutput();
 		System.exit(0);
 	}
 	
@@ -38,12 +41,16 @@ public class Assembler {
 		shared.updateFileInfo(asmFileName);
 		asmCode = asmFile.readAsmFile(asmFileName);
 		asmInstructions = parseSource.parse(asmCode); //Parse each line
-		
+
+		//lstGenerator.toFile(symbolTable.asmSymbols, asmInstructions);
+	}
+	
+	public void pass1(){
 		symbolTable.build(asmInstructions);		
 		symbolTable.toFile();
-		
-		//lstGenerator.toFile(symbolTable.asmSymbols, asmInstructions);
-		
+	}
+	
+	public void generateOutput(){
 		exeGenerator.toFile(symbolTable.asmSymbols, asmInstructions);
 	}
 

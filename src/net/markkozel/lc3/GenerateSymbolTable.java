@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.markkozel.lc3.Instructions.Instruction;
+
 //public class SymbolTable extends LC3_FileTypeParent implements LC3_FileTypeTemplate{
 public class GenerateSymbolTable {
 
