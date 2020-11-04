@@ -15,7 +15,6 @@ This assembler will produce .obj, .lst, and .sym file to support the LC-3 Simula
 * .lst - List file of source file
 * .obj - LC-3 executable object file
 
-![Overview Diagram]( https://gitlab.com/MarkKozel/LC3_Assembler/blob/master/design/01_Overview.png "Overview")
 ![Overview Diagram]( 01_Overview.png "Overview")
 
 ---
