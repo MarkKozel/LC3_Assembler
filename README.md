@@ -4,7 +4,7 @@ Java-based assembler for Little Computer 3 (LC-3) [Wikipedia Page](https://en.wi
 ## Purpose
 Create a command-line assembler that can be used to generate all output files of the LC-3 Simulator 3.01 [McGraw Hill Textbook Reference](http://highered.mheducation.com/sites/0072467509/index.html)
 
-This assembler will produce .obj, .lst, and .sym file to support the LC-3 Simulator virtual environment. .obj will be binary compatable to the LC-3 Simulator assembler output
+This assembler will produce .obj, .lst, and .sym file to support the LC-3 Simulator virtual environment. .obj will be binary compatible to the LC-3 Simulator assembler output
 
 ### File Input
 * .asm - LC-3 Assembly souce code file
@@ -16,12 +16,14 @@ This assembler will produce .obj, .lst, and .sym file to support the LC-3 Simula
 * .obj - LC-3 executable object file
 
 ![Overview Diagram]( https://gitlab.com/MarkKozel/LC3_Assembler/blob/master/design/01_Overview.png "Overview")
-
+![Overview Diagram]( 01_Overview.png "Overview")
 
 ---
 ### Dev Log
 
-2018-11-24 - Added classes to generate Listing and Executable files. Added JUnit test package and test files for some classes. Currently taking a deep-dive to get Operate Instrucitons working all teh way to .org file.
+2020-11-03 - Cleanup in preparation to turn project over to Hancock's Bulldog Software Development club
+
+2018-11-24 - Added classes to generate Listing and Executable files. Added JUnit test package and test files for some classes. Currently taking a deep-dive to get Operate Instructions working all teh way to .org file.
 
 2018-11-12 - Completed logic to parse PseudoOps and Operate commands. Added SymbolTable and Symbol classes to extract and contain symbols. Project can produce a complete symbol table and output to disk file.
 
