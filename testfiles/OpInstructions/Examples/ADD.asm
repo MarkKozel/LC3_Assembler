@@ -1,0 +1,3 @@
+.ORIG x3000
+START ADD R0, R0, #5
+.END

@@ -22,4 +22,16 @@ public class Instruction_Comment extends Instruction {
 
 		return result;
 	}
+
+	public String toBinary() {
+		return "";
+	}
+
+	public String toHex() {
+		return "";
+	}
+
+	public byte[] toObjCode() {
+		return new byte[1];
+	}
 }

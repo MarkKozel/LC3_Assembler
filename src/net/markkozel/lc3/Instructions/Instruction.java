@@ -207,4 +207,8 @@ public class Instruction {
 	public Instruction_Type getType() {
 		return this.type;
 	}
+	
+//	public abstract String toBinary();
+//	public abstract String toHex();
+//	public abstract byte[] toObjCode();
 }

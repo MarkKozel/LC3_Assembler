@@ -1,6 +1,7 @@
 package net.markkozel.lc3;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,9 +26,9 @@ public class GenerateSymbolTable {
 		boolean result = true;
 
 		for (Instruction line : asmInstructions) {
-
-			if (line.getCode() != null) { // Skip comments
-				if (line.getCode().equals(".ORIG")) {
+			String currInstruction = line.getCode();
+			if (currInstruction != null) { // Skip comments
+				if (currInstruction.equals(".ORIG")) {
 					// remove leading 'x'
 					String sAddr = line.getValue().substring(1); 
 					try {
@@ -45,9 +46,9 @@ public class GenerateSymbolTable {
 						asmSymbols.add(new Symbol(line.getLabel().toUpperCase(), line.getAddress()));
 					}
 
-					System.out.println(line.toString());
+//					System.out.println("  " + line.toString());
 
-					if (line.getCode().equals(".BLKW")) {
+					if (currInstruction.equals(".BLKW")) {
 						String val = line.getValue();
 						if (val.startsWith("#")) { // Base 10 size
 							addressOffset += Integer.parseInt(val.substring(1));
@@ -56,7 +57,7 @@ public class GenerateSymbolTable {
 							addressOffset += Integer.parseInt(val.substring(1), 16);
 						}
 					} else {
-						if (line.getCode().equals(".STRINGZ")) {
+						if (currInstruction.equals(".STRINGZ")) {
 							String val = line.getValue();
 							addressOffset += val.length() + 1;
 						} else {
@@ -69,14 +70,16 @@ public class GenerateSymbolTable {
 
 		System.out.println("Symbol Table");
 		for (Symbol sym : asmSymbols) {
-			System.out.println(sym.toString());
+			System.out.println("  " + sym.toString());
 		}
 		return result;
 	}
 
 	public int toFile() {
 
-		String fileName = shared.path + "\\" + shared.baseFilename +  fileExt;
+		String fileName = shared.path + File.separator + shared.baseFilename +  fileExt;
+		String header = "//Symbol Name        Page Address\n";
+		String seperator = "//------------------ ------------\n";
 
 		BufferedWriter bw = null;
 		FileWriter fw = null;
@@ -85,18 +88,25 @@ public class GenerateSymbolTable {
 			fw = new FileWriter(fileName);
 			bw = new BufferedWriter(fw);
 			
-			bw.write("//Symbol Name        Page Address\n");
-			bw.write("//------------------ ------------\n");
+			System.out.println("\nWriting Symbol Table");
+			bw.write(header);
+			System.out.print("  " +header);
+			bw.write(seperator);
+			System.out.print("  " + seperator);
 			for (Symbol sym : asmSymbols) {
-				bw.write("//  " + sym.toString() +"\n");
+				String stLine = "//  " + sym.toString() +"\n";
+				bw.write(stLine);
+				System.out.print("  " + stLine);
 			}
-			bw.write("\n");
+//			bw.write("\n");
+			System.out.println("  \nWriting Symbol Table - Complete");
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				if (bw != null)
+					bw.flush();
 					bw.close();
 
 				if (fw != null)

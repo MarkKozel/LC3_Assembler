@@ -78,4 +78,16 @@ public class Instruction_PseudoCodes extends Instruction {
 
 		return result;
 	}
+	
+	public String toBinary() {
+		return "";
+	}
+
+	public String toHex() {
+		return "";
+	}
+
+	public byte[] toObjCode() {
+		return new byte[1];
+	}
 }

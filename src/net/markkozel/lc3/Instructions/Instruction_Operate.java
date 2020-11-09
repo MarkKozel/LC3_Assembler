@@ -1,5 +1,6 @@
 package net.markkozel.lc3.Instructions;
 
+import java.io.UnsupportedEncodingException;
 import java.util.StringTokenizer;
 
 import net.markkozel.lc3.Shared;
@@ -162,6 +163,17 @@ public class Instruction_Operate extends Instruction {
 		String temp = this.toBinary();
 		int decimal = Integer.parseInt(temp, 2);
 		return Integer.toString(decimal, 16);
+	}
+	
+	public byte[] toObjCode() {
+		byte[] result = new byte[4];
+		String temp = this.toHex();
+		try {
+			result = temp.getBytes("cp420");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	/**
